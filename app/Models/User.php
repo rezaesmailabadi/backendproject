@@ -18,9 +18,18 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'email',
+        'mobile',
+        'status',
+        'user_type',
+        'activation',
+        'profile_photo_path',
         'password',
+        'email_verified_at',
+        'mobile_verified_at',
+        'national_code',
     ];
 
     /**
@@ -31,6 +40,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'two_factor_recovery_codes',
+        'two_factor_secret',
     ];
 
     /**
@@ -41,4 +52,22 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    protected $appends = [
+        'profile_photo_url',
+    ];
+
+
+
+    public function getFullNameAttribute()
+    {
+        return "{$this->first_name} {$this->last_name}";
+    }
+
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }
