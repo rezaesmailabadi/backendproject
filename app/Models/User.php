@@ -52,23 +52,6 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-<<<<<<< HEAD
-=======
-
-
-    protected $appends = [
-        'profile_photo_url',
-    ];
-
-
-
-    public function getFullNameAttribute()
-    {
-        return "{$this->first_name} {$this->last_name}";
-    }
-
-
->>>>>>> ed613030f04430de942648593b72c9b4f57650c8
     public function orders()
     {
         return $this->hasMany(Order::class);
