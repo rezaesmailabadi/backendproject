@@ -35,6 +35,8 @@ Route::post('addnew', [CategoryController::class, 'store']);
 Route::put('update/{id}', [CategoryController::class, 'update']);
 Route::delete('delete/{id}', [CategoryController::class, 'destroy']);
 Route::get('ordercategory/{id}', [CategoryController::class, 'ordercategory']);
+Route::get('ordercategorydatails/{id}', [CategoryController::class, 'ordercategorydatails']);
+
 
 
 

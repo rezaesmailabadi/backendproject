@@ -135,4 +135,5 @@ class CategoryController extends Controller
             'results' => $orders
         ], 200);
     }
+
 }
