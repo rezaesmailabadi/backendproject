@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceResponse;
 
@@ -122,4 +123,17 @@ class CategoryController extends Controller
             'message' => "sussessfully"
         ], 200);
     }
+
+
+    public function ordercategory($id)
+    {
+        // User Detail 
+        $orders = Order::where('category_id', $id)->get();
+
+        // Return Json Response
+        return response()->json([
+            'results' => $orders
+        ], 200);
+    }
+
 }
