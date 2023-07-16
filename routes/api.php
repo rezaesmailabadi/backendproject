@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OrderController;
 
 use App\Http\Controllers\Auth\Customer\LoginRegisterController;
+use App\Http\Controllers\GalleryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -37,6 +38,21 @@ Route::get('orders/{id}',[OrderController::class,'show']);
 Route::post('addorder',[OrderController::class,'store']);
 Route::put('updateorder/{id}',[OrderController::class,'update']);
 Route::delete('deleteorder/{id}',[OrderController::class,'destroy']);
+
+
+Route::get('my_order',[OrderController::class,'my_order']);
+
+
+
+//gallery
+Route::get('/gallery', [GalleryController::class, 'index']);
+Route::get('/gallery/create/{id}', [GalleryController::class, 'create']);
+Route::post('/gallery/store', [GalleryController::class, 'store']);
+Route::delete('/gallery/destroy/{id}', [GalleryController::class, 'destroy']);
+
+
+
+
 
 Route::namespace('Auth')->group(function () {
 

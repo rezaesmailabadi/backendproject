@@ -38,15 +38,15 @@ class OrderController extends Controller
 
     public function store(OrderRequest $request)
     {
-    
+
 
         try {
             $realTimestampStart = substr($request->published_at, 0, 10);
             $inputs['published_at'] = date("Y-m-d H:i:s", (int)$realTimestampStart);
-          
-          
+
+
             Order::create([
-            
+
 
                 'user_id' => $request->user_id,
                 'title' => $request->title,
@@ -57,18 +57,18 @@ class OrderController extends Controller
                 'price' => $request->price,
                 'publishable' => $request->publishable,
                 'category_id' => $request->category_id,
-              
+
                 'email' => $request->email,
                 'mobile' => $request->mobile,
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
-                
+
 
                 // 'published_at' => $request->published_at,
 
             ]);
-          
-           
+
+
             return response()->json([
                 'message' => "successfully"
             ], 200);
@@ -83,7 +83,7 @@ class OrderController extends Controller
 
     public function update(OrderRequest $request, $id)
     {
-       
+
 
         try {
 
@@ -95,18 +95,18 @@ class OrderController extends Controller
                     'message' => "not found"
                 ], 404);
             }
-          
+
             $realTimestampStart = substr($request->published_at, 0, 10);
-           
+
             $inputs['published_at'] = date("Y-m-d H:i:s", (int)$realTimestampStart);
-          
+
 
             $orders->title = $request->title;
             $orders->introduction = $request->introduction;
             $orders->image = $request->image;
             $orders->status = $request->status;
             $orders->tags = $request->tags;
-            $orders-> price = $request->price;
+            $orders->price = $request->price;
             $orders->publishable = $request->publishable;
             $orders->category_id = $request->category_id;
             $orders->email = $request->email;
@@ -115,19 +115,17 @@ class OrderController extends Controller
             $orders->last_name = $request->last_name;
 
 
-            
+
             // dd($tickets);
             $orders->save();
 
 
 
-          
+
             return response()->json([
                 'message' => "successfully"
             ], 200);
-        } 
-        
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
 
             return response()->json([
                 'message' => "wrong"
@@ -148,6 +146,33 @@ class OrderController extends Controller
             ], 404);
         }
         $orders->delete();
+
+        return response()->json([
+            'message' => "sussessfully"
+        ], 200);
+    }
+
+
+    public function my_order()
+    {
+
+        $orders = Order::all();
+
+        $count_order = Order::count();
+        // dd($count_order);
+
+        foreach ($orders as $order) {
+            // dd($order);
+            $order->title;
+
+
+        }
+        if (!$orders) {
+            return response()->json([
+                'message' => "not found"
+            ], 404);
+        }
+       
 
         return response()->json([
             'message' => "sussessfully"
