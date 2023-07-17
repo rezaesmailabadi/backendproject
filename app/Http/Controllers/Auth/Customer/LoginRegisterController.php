@@ -25,21 +25,7 @@ class LoginRegisterController extends Controller
     {
         // dd($request);
         try {
-
-
-            // User::create([
-            //     'email' => $request->email
-            // ]);
-            // Return Json Response
-            // return response()->json([
-            //     'message' => "User successfully created."
-            // ], 200);
-
-
-
             $inputs = $request->all();
-
-
             //check id is email or not
             if (filter_var($inputs['email'], FILTER_VALIDATE_EMAIL)) {
                 $type = 1; // 1 => email
@@ -66,33 +52,13 @@ class LoginRegisterController extends Controller
             ];
             //create otp code
             Otp::create($otpInputs);
-
-
-
-
-            $emailService = new EmailService();
-            $details = [
-                'subject' => 'ایمیل فعال سازی',
-                'body' => "کد فعال سازی شما : $otpCode"
-            ];
-            $emailService->setDetails($details);
-            $emailService->setFrom('noreply@example.com', 'example'); /// از کجا قراره ارسال بشه معمولا اینو مینیسن
-            $emailService->setSubject('کد احراز هویت');
-            $emailService->setTo($inputs['email']); // میخوای به کی ارسال کنی 
-
-            $messagesService = new MessageService($emailService);
-
-            $messagesService->send();
-
             return response()->json([
                 'results' => $otpCode
             ], 200);
-            
-           
         } catch (\Exception $e) {
             // Return Json Response
             return response()->json([
-                'message' => "Something went really wrong!"
+                'message' => "Something went dfsdfsfdsfdsdfsfdsfd wrong!"
             ], 500);
         }
     }
