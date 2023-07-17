@@ -20,10 +20,6 @@ class LoginRegisterController extends Controller
 
 
 
-    // public function loginRegisterForm()
-    // {
-    //     return view('customer.auth.login-register');
-    // }
 
     public function loginRegister(LoginRegisterRequest $request)
     {
@@ -74,7 +70,7 @@ class LoginRegisterController extends Controller
             // dd('hi');
 
 
-            
+
             $emailService = new EmailService();
             $details = [
                 'subject' => 'ایمیل فعال سازی',
@@ -99,58 +95,39 @@ class LoginRegisterController extends Controller
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public function loginConfirmForm($token)
+    public function loginConfirmForm($token, LoginRegisterRequest $request)
     {
 
         try {
 
-            $otp = Otp::where('token', $token)->first();
+            $inputs = $request->all();
+            $otp = Otp::where('token', $token)->where('used', 0)->where('created_at', '>=', Carbon::now()->subMinute(5)->toDateTimeString())->first();
             if (empty($otp)) {
-                return redirect()->route('auth.customer.login-register-form')->withErrors(['id' => 'آدرس وارد شده نامعتبر میباشد']);
+                return response()->json([
+                    'message' => "آدرس وارد شده صحیح نمیباشد "
+                ], 500);
             }
-            return view('customer.auth.login-confirm', compact('token', 'otp'));
+
+            //if otp not match
+            if ($otp->otp_code !== $inputs['otp']) {
+                return response()->json([
+                    'message' => "کد وارد شده صحیح نمیباشد "
+                ], 500);
+            }
+
+            // if everything is ok :
+            $otp->update(['used' => 1]);
+            $user = $otp->user()->first();
+            if($otp->type == 1 && empty($user->email_verified_at)) {
+                $user->update(['email_verified_at' => Carbon::now()]);
+            }
+            Auth::login($user);
+            return response()->json([
+                'message' => "همه اوکیه"
+            ],200);
+
+
+
         } catch (\Exception $e) {
             // Return Json Response
             return response()->json([
@@ -158,6 +135,13 @@ class LoginRegisterController extends Controller
             ], 500);
         }
     }
+
+
+
+
+
+
+
 
 
     public function loginConfirm($token, LoginRegisterRequest $request)

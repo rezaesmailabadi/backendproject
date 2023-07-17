@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\OrderRequest;
 use App\Models\Order;
+use App\Models\OrderImage;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -41,32 +42,26 @@ class OrderController extends Controller
 
 
         try {
-            $realTimestampStart = substr($request->published_at, 0, 10);
-            $inputs['published_at'] = date("Y-m-d H:i:s", (int)$realTimestampStart);
-
-
+            // $realTimestampStart = substr($request->published_at, 0, 10);
+            // $inputs['published_at'] = date("Y-m-d H:i:s", (int)$realTimestampStart);
             Order::create([
-
-
                 'user_id' => $request->user_id,
                 'title' => $request->title,
                 'introduction' => $request->introduction,
-                'image' => $request->image,
-                'status' => $request->status,
-                'tags' => $request->tags,
-                'price' => $request->price,
-                'publishable' => $request->publishable,
-                'category_id' => $request->category_id,
-
-                'email' => $request->email,
-                'mobile' => $request->mobile,
-                'first_name' => $request->first_name,
-                'last_name' => $request->last_name,
-
-
-                // 'published_at' => $request->published_at,
-
+                // 'image' => $request->image,
+                'min_price' => $request->min_price,
+                'max_price' => $request->max_price,
+                'order_category' => $request->category_id,
             ]);
+
+            foreach ($request->file('images') as $imagefile) {
+                $image = new OrderImage();
+                $path = $imagefile->store('/images/resource', ['disk' =>   'my_files']);
+                $image->url = $path;
+                $order = new Order;
+                $image->order_id = $order->id;
+                $image->save();
+            }
 
 
             return response()->json([
@@ -79,6 +74,8 @@ class OrderController extends Controller
             ], 500);
         }
     }
+
+
 
 
     public function update(OrderRequest $request, $id)
@@ -164,15 +161,13 @@ class OrderController extends Controller
         foreach ($orders as $order) {
             // dd($order);
             $order->title;
-
-
         }
         if (!$orders) {
             return response()->json([
                 'message' => "not found"
             ], 404);
         }
-       
+
 
         return response()->json([
             'message' => "sussessfully"
