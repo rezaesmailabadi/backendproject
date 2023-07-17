@@ -67,7 +67,6 @@ class LoginRegisterController extends Controller
             //create otp code
             Otp::create($otpInputs);
 
-            // dd('hi');
 
 
 
@@ -85,7 +84,11 @@ class LoginRegisterController extends Controller
 
             $messagesService->send();
 
-            // return redirect()->route('auth.customer.login-confirm-form', $token);
+            return response()->json([
+                'results' => $otpCode
+            ], 200);
+            
+           
         } catch (\Exception $e) {
             // Return Json Response
             return response()->json([
@@ -118,16 +121,13 @@ class LoginRegisterController extends Controller
             // if everything is ok :
             $otp->update(['used' => 1]);
             $user = $otp->user()->first();
-            if($otp->type == 1 && empty($user->email_verified_at)) {
+            if ($otp->type == 1 && empty($user->email_verified_at)) {
                 $user->update(['email_verified_at' => Carbon::now()]);
             }
             Auth::login($user);
             return response()->json([
                 'message' => "همه اوکیه"
-            ],200);
-
-
-
+            ], 200);
         } catch (\Exception $e) {
             // Return Json Response
             return response()->json([
