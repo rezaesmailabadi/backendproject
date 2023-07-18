@@ -53,7 +53,8 @@ class LoginRegisterController extends Controller
             //create otp code
             Otp::create($otpInputs);
             return response()->json([
-                'results' => $otpCode
+                'results' => $otpCode,
+                'user_id' => $user->id,
             ], 200);
         } catch (\Exception $e) {
             // Return Json Response
