@@ -36,6 +36,7 @@ Route::get('orders/{id}', [OrderController::class, 'show']);
 Route::post('addorder', [OrderController::class, 'store']);
 Route::get('newsorder', [OrderController::class, 'newsorder']); //new
 
+Route::get('ordercategory/{id}',[CategoryController::class,'ordercategory']);
 
 
 
