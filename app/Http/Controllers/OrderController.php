@@ -173,4 +173,17 @@ class OrderController extends Controller
             'message' => "sussessfully"
         ], 200);
     }
+
+
+
+    public function newsorder()
+    {
+        $neworders = Order::latest()->get();
+        return response()->json([
+            'results' => $neworders
+        ], 200);
+    }
+
+
+    
 }

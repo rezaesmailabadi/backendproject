@@ -28,17 +28,23 @@ Route::get('/home', [HomeController::class, 'latestorder']);
 
 
 
-Route::get('/Categories',[CategoryController::class,'index']);
+Route::get('/Categories', [CategoryController::class, 'index']);
 
 // اگر نشد / رو بزار
-Route::get('orders',[OrderController::class,'index']);
-Route::get('orders/{id}',[OrderController::class,'show']);
-Route::post('addorder',[OrderController::class,'store']);
-Route::put('updateorder/{id}',[OrderController::class,'update']);
-Route::delete('deleteorder/{id}',[OrderController::class,'destroy']);
+Route::get('orders', [OrderController::class, 'index']); //new
+Route::get('orders/{id}', [OrderController::class, 'show']);
+Route::post('addorder', [OrderController::class, 'store']);
+Route::get('newsorder', [OrderController::class, 'newsorder']); //new
 
 
-Route::get('my_order',[OrderController::class,'my_order']);
+
+
+
+Route::put('updateorder/{id}', [OrderController::class, 'update']);
+Route::delete('deleteorder/{id}', [OrderController::class, 'destroy']);
+
+
+Route::get('my_order', [OrderController::class, 'my_order']);
 
 
 //gallery
