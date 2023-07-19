@@ -37,7 +37,7 @@ class OrderController extends Controller
 
 
 
-    public function store(OrderRequest $request)
+    public function store(Request $request)
     {
 
         try {
@@ -56,6 +56,8 @@ class OrderController extends Controller
 
             // $newOrder['category_id'] = $inputs['category_id'];
             $newOrder['introduction'] = $inputs['introduction'];
+            $newOrder['nardeban'] = $inputs['nardeban'];
+            $newOrder['urgent'] = $inputs['urgent'];
             $newOrder['min_price'] = $inputs['min_price'];
             $newOrder['max_price'] = $inputs['max_price'];
             $newOrder['category_id'] = $inputs['order_category'];
