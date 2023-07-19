@@ -31,7 +31,7 @@ class Order extends Model
 
 
 
-    protected $fillable = ['title', 'introduction', 'slug', 'image', 'status', 'tags', 'min_price', 'max_price', 'publishable', 'category_id', 'email', 'mobile', 'user_id', 'published_at'];
+    protected $fillable = ['title', 'introduction', 'min_price', 'max_price', 'category_id', 'user_id', 'image_one', 'image_two', 'image_three'];
     public function user()
     {
 

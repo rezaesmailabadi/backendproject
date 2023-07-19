@@ -40,30 +40,34 @@ class OrderController extends Controller
     public function store(OrderRequest $request)
     {
 
-
         try {
-            // $realTimestampStart = substr($request->published_at, 0, 10);
-            // $inputs['published_at'] = date("Y-m-d H:i:s", (int)$realTimestampStart);
-            Order::create([
-                'user_id' => $request->user_id,
-                'title' => $request->title,
-                'introduction' => $request->introduction,
-                // 'image' => $request->image,
-                'min_price' => $request->min_price,
-                'max_price' => $request->max_price,
-                'order_category' => $request->category_id,
-            ]);
 
-            foreach ($request->file('images') as $imagefile) {
-                $image = new OrderImage();
-                $path = $imagefile->store('/images/resource', ['disk' =>   'my_files']);
-                $image->url = $path;
-                $order = new Order;
-                $image->order_id = $order->id;
-                $image->save();
-            }
+            $inputs = $request->all();
 
 
+            // dd($inputs['user_id']);
+            $newOrder['user_id'] = $inputs['user_id'];
+
+            $newOrder['title'] = $inputs['title'];
+
+            $newOrder['image_one'] = $inputs['image1'];
+            $newOrder['image_two'] = $inputs['image2'];
+            $newOrder['image_three'] = $inputs['image3'];
+
+            // $newOrder['category_id'] = $inputs['category_id'];
+            $newOrder['introduction'] = $inputs['introduction'];
+            $newOrder['min_price'] = $inputs['min_price'];
+            $newOrder['max_price'] = $inputs['max_price'];
+            $newOrder['category_id'] = $inputs['order_category'];
+            Order::create($newOrder);
+            // foreach ($request->file('images') as $imagefile) {
+            //     $image = new OrderImage();
+            //     $path = $imagefile->store('/images/resource', ['disk' =>   'my_files']);
+            //     $image->url = $path;
+            //     $order = new Order;
+            //     $image->order_id = $order->id;
+            //     $image->save();
+            // }
             return response()->json([
                 'message' => "successfully"
             ], 200);
@@ -73,6 +77,7 @@ class OrderController extends Controller
                 'message' => "wrong"
             ], 500);
         }
+        // dd($request);
     }
 
 
@@ -185,5 +190,14 @@ class OrderController extends Controller
     }
 
 
-    
+
+
+    public function datail($id)
+    {
+        $orders = Order::find($id);
+        // $ordreimage = OrderImage::where('order_id', $id)->get();
+        return response()->json([
+            'results' => $orders
+        ], 200);
+    }
 }

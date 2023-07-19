@@ -19,9 +19,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 
 Route::get('/home', [HomeController::class, 'latestorder']);
@@ -33,11 +33,17 @@ Route::get('/Categories', [CategoryController::class, 'index']);
 // اگر نشد / رو بزار
 Route::get('orders', [OrderController::class, 'index']); //new
 Route::get('orders/{id}', [OrderController::class, 'show']);
-Route::post('addorder', [OrderController::class, 'store']);
+
+
+
+Route::any('addorder', [OrderController::class, 'store']);
+
+
 Route::get('newsorder', [OrderController::class, 'newsorder']); //new
 
-Route::get('ordercategory/{id}',[CategoryController::class,'ordercategory']);
+Route::get('ordercategory/{id}', [CategoryController::class, 'ordercategory']);
 
+Route::get('order-datails/{id}', [OrderController::class, 'datail']);
 
 
 
