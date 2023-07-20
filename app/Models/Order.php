@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends Model implements CanVisit
 {
+<<<<<<< HEAD
    
     use HasFactory;
     use HasVisits;
@@ -29,6 +30,10 @@ class Order extends Model implements CanVisit
 
 //     use HasFactory, SoftDeletes;
 
+=======
+
+    use HasFactory, SoftDeletes;
+>>>>>>> 38ff09f35353048d8d123821bf52c6687edd3769
 
 
     public function sluggable(): array
@@ -49,6 +54,7 @@ class Order extends Model implements CanVisit
 
 
 
+<<<<<<< HEAD
 
     /**
      * Get the total page views of the article.
@@ -61,6 +67,10 @@ class Order extends Model implements CanVisit
     protected $fillable = ['title', 'introduction', 'slug', 'image', 'status', 'tags', 'price', 'publishable', 'category_id', 'email', 'mobile', 'first_name', 'user_id', 'last_name', 'published_at'];
     public function user()
 
+=======
+    protected $fillable = ['title', 'introduction', 'min_price', 'max_price', 'category_id', 'user_id', 'image_one', 'image_two', 'image_three', 'urgent', 'nardeban'];
+    public function user()
+>>>>>>> 38ff09f35353048d8d123821bf52c6687edd3769
     {
 
         return $this->belongsTo(User::class, 'user_id');

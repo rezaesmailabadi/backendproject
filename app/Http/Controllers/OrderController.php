@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\OrderRequest;
 use App\Models\Order;
+use App\Models\OrderImage;
 use Illuminate\Http\Request;
 
 
@@ -44,39 +45,39 @@ class OrderController extends Controller
 
 
 
-    public function store(OrderRequest $request)
+    public function store(Request $request)
     {
 
-
         try {
-            $realTimestampStart = substr($request->published_at, 0, 10);
-            $inputs['published_at'] = date("Y-m-d H:i:s", (int)$realTimestampStart);
+
+            $inputs = $request->all();
 
 
-            Order::create([
+            // dd($inputs['user_id']);
+            $newOrder['user_id'] = $inputs['user_id'];
 
+            $newOrder['title'] = $inputs['title'];
 
-                'user_id' => $request->user_id,
-                'title' => $request->title,
-                'introduction' => $request->introduction,
-                'image' => $request->image,
-                'status' => $request->status,
-                'tags' => $request->tags,
-                'price' => $request->price,
-                'publishable' => $request->publishable,
-                'category_id' => $request->category_id,
+            $newOrder['image_one'] = $inputs['image1'];
+            $newOrder['image_two'] = $inputs['image2'];
+            $newOrder['image_three'] = $inputs['image3'];
 
-                'email' => $request->email,
-                'mobile' => $request->mobile,
-                'first_name' => $request->first_name,
-                'last_name' => $request->last_name,
-
-
-                // 'published_at' => $request->published_at,
-
-            ]);
-
-
+            // $newOrder['category_id'] = $inputs['category_id'];
+            $newOrder['introduction'] = $inputs['introduction'];
+            $newOrder['nardeban'] = $inputs['nardeban'];
+            $newOrder['urgent'] = $inputs['urgent'];
+            $newOrder['min_price'] = $inputs['min_price'];
+            $newOrder['max_price'] = $inputs['max_price'];
+            $newOrder['category_id'] = $inputs['order_category'];
+            Order::create($newOrder);
+            // foreach ($request->file('images') as $imagefile) {
+            //     $image = new OrderImage();
+            //     $path = $imagefile->store('/images/resource', ['disk' =>   'my_files']);
+            //     $image->url = $path;
+            //     $order = new Order;
+            //     $image->order_id = $order->id;
+            //     $image->save();
+            // }
             return response()->json([
                 'message' => "successfully"
             ], 200);
@@ -86,7 +87,10 @@ class OrderController extends Controller
                 'message' => "wrong"
             ], 500);
         }
+        // dd($request);
     }
+
+
 
 
     public function update(OrderRequest $request, $id)
@@ -183,6 +187,28 @@ class OrderController extends Controller
 
         return response()->json([
             'message' => "sussessfully"
+        ], 200);
+    }
+
+
+
+    public function newsorder()
+    {
+        $neworders = Order::latest()->get();
+        return response()->json([
+            'results' => $neworders
+        ], 200);
+    }
+
+
+
+
+    public function datail($id)
+    {
+        $orders = Order::find($id);
+        // $ordreimage = OrderImage::where('order_id', $id)->get();
+        return response()->json([
+            'results' => $orders
         ], 200);
     }
 }

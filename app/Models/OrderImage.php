@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class OrderImage extends Model
 {
     use HasFactory;
+<<<<<<< HEAD
     protected $casts = ['image' => 'array'];
     //   نوع آرایه هست favorite  ز   توی کد بالا، گفتیم که از
     //   ، لاراول بطور خودکار قبل از ثبت اطلاعات،
@@ -22,5 +23,16 @@ class OrderImage extends Model
         public function ordersImage()
     {
         return $this->belongsTo(Order::class, 'order_id');
+=======
+
+    protected $fillable = ['image', 'order_id'];
+
+    protected $casts = ['image' => 'array'];
+
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
+>>>>>>> 38ff09f35353048d8d123821bf52c6687edd3769
     }
 }

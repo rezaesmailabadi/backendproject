@@ -20,30 +20,12 @@ class LoginRegisterController extends Controller
 
 
 
-    // public function loginRegisterForm()
-    // {
-    //     return view('customer.auth.login-register');
-    // }
 
     public function loginRegister(LoginRegisterRequest $request)
     {
         // dd($request);
         try {
-
-
-            // User::create([
-            //     'email' => $request->email
-            // ]);
-            // Return Json Response
-            // return response()->json([
-            //     'message' => "User successfully created."
-            // ], 200);
-
-
-
             $inputs = $request->all();
-
-
             //check id is email or not
             if (filter_var($inputs['email'], FILTER_VALIDATE_EMAIL)) {
                 $type = 1; // 1 => email
@@ -70,87 +52,49 @@ class LoginRegisterController extends Controller
             ];
             //create otp code
             Otp::create($otpInputs);
-
-            // dd('hi');
-
-
-            
-            $emailService = new EmailService();
-            $details = [
-                'subject' => 'ایمیل فعال سازی',
-                'body' => "کد فعال سازی شما : $otpCode"
-            ];
-            $emailService->setDetails($details);
-            $emailService->setFrom('noreply@example.com', 'example'); /// از کجا قراره ارسال بشه معمولا اینو مینیسن
-            $emailService->setSubject('کد احراز هویت');
-            $emailService->setTo($inputs['email']); // میخوای به کی ارسال کنی 
-
-            $messagesService = new MessageService($emailService);
-
-            $messagesService->send();
-
-            // return redirect()->route('auth.customer.login-confirm-form', $token);
+            return response()->json([
+                'results' => $otpCode,
+                'user_id' => $user->id,
+            ], 200);
         } catch (\Exception $e) {
             // Return Json Response
             return response()->json([
-                'message' => "Something went really wrong!"
+                'message' => "Something went dfsdfsfdsfdsdfsfdsfd wrong!"
             ], 500);
         }
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public function loginConfirmForm($token)
+    public function loginConfirmForm($token, LoginRegisterRequest $request)
     {
 
         try {
 
-            $otp = Otp::where('token', $token)->first();
+            $inputs = $request->all();
+            $otp = Otp::where('token', $token)->where('used', 0)->where('created_at', '>=', Carbon::now()->subMinute(5)->toDateTimeString())->first();
             if (empty($otp)) {
-                return redirect()->route('auth.customer.login-register-form')->withErrors(['id' => 'آدرس وارد شده نامعتبر میباشد']);
+                return response()->json([
+                    'message' => "آدرس وارد شده صحیح نمیباشد "
+                ], 500);
             }
-            return view('customer.auth.login-confirm', compact('token', 'otp'));
+
+            //if otp not match
+            if ($otp->otp_code !== $inputs['otp']) {
+                return response()->json([
+                    'message' => "کد وارد شده صحیح نمیباشد "
+                ], 500);
+            }
+
+            // if everything is ok :
+            $otp->update(['used' => 1]);
+            $user = $otp->user()->first();
+            if ($otp->type == 1 && empty($user->email_verified_at)) {
+                $user->update(['email_verified_at' => Carbon::now()]);
+            }
+            Auth::login($user);
+            return response()->json([
+                'message' => "همه اوکیه"
+            ], 200);
         } catch (\Exception $e) {
             // Return Json Response
             return response()->json([
@@ -158,6 +102,13 @@ class LoginRegisterController extends Controller
             ], 500);
         }
     }
+
+
+
+
+
+
+
 
 
     public function loginConfirm($token, LoginRegisterRequest $request)
