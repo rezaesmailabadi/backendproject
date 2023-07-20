@@ -9,6 +9,7 @@ use App\Http\Controllers\Customer\HomeController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\popularController;
+use App\Http\Controllers\SearchController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -146,3 +147,7 @@ Route::get('login-confirm/{token}', [LoginRegisterController::class, 'loginConfi
 Route::middleware('throttle:customer-login-confirm-limiter')->post('/login-confirm/{token}', [LoginRegisterController::class, 'loginConfirm'])->name('auth.customer.login-confirm');
 Route::middleware('throttle:customer-login-resend-otp-limiter')->get('/login-resend-otp/{token}', [LoginRegisterController::class, 'loginResendOtp'])->name('auth.customer.login-resend-otp');
 Route::get('/logout', [LoginRegisterController::class, 'logout'])->name('auth.customer.logout');
+
+
+
+Route::get('search', [SearchController::class, 'search']);
