@@ -4,11 +4,11 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OrderController;
 
 use App\Http\Controllers\Auth\Customer\LoginRegisterController;
-<<<<<<< HEAD
 use App\Http\Controllers\GalleryController;
-=======
 use App\Http\Controllers\Customer\HomeController;
->>>>>>> 299df1f6fcfa320ed4e1fd81aad6f93341755b6c
+use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\LikeController;
+use App\Http\Controllers\popularController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -33,7 +33,6 @@ Route::get('/home', [HomeController::class, 'latestorder']);
 
 
 
-<<<<<<< HEAD
 
 Route::get('orders',[OrderController::class,'index']);
 Route::get('orders/{id}',[OrderController::class,'show']);
@@ -68,7 +67,8 @@ Route::namespace('Auth')->group(function () {
     Route::middleware('throttle:customer-login-resend-otp-limiter')->get('/login-resend-otp/{token}', [LoginRegisterController::class, 'loginResendOtp'])->name('auth.customer.login-resend-otp');
     Route::get('/logout', [LoginRegisterController::class, 'logout'])->name('auth.customer.logout');
 });
-=======
+
+
 Route::get('Categories', [CategoryController::class, 'index']);
 Route::get('Categories/{id}', [CategoryController::class, 'show']);
 Route::post('addnew', [CategoryController::class, 'store']);
@@ -76,7 +76,6 @@ Route::put('update/{id}', [CategoryController::class, 'update']);
 Route::delete('delete/{id}', [CategoryController::class, 'destroy']);
 Route::get('ordercategory/{id}', [CategoryController::class, 'ordercategory']);
 Route::get('ordercategorydatails/{id}', [CategoryController::class, 'ordercategorydatails']);
->>>>>>> 299df1f6fcfa320ed4e1fd81aad6f93341755b6c
 
 
 
@@ -89,6 +88,17 @@ Route::get('orders/{id}', [OrderController::class, 'show']);
 Route::post('addorder', [OrderController::class, 'store']);
 Route::put('updateorder/{id}', [OrderController::class, 'update']);
 Route::delete('deleteorder/{id}', [OrderController::class, 'destroy']);
+
+
+
+
+///بیشترین بازدید بر اساس آی پی
+Route::get('order-favorites', [FavoriteController::class, 'index']);
+
+
+//// بر اساس لایک محبوب ترین ها
+Route::post('like-unlike-order', [LikeController::class, 'store']);
+Route::get('order-popular', [popularController::class, 'index']);
 
 
 

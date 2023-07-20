@@ -161,7 +161,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        
+        // CyrildeWit\PageViewCounter\PageViewCounterServiceProvider::class,
 
         /*
          * Package Service Providers...

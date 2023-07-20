@@ -14,10 +14,12 @@ class CreateOrderImagesTable extends Migration
     public function up()
     {
         Schema::create('order_images', function (Blueprint $table) {
+          
             $table->id();
             $table->text('image');
             $table->foreignId('order_id')->constrained('orders')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
+           
         });
     }
 
