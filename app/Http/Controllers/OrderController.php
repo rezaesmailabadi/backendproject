@@ -23,7 +23,10 @@ class OrderController extends Controller
     public function show($id)
     {
 
+
         $orders =  Order::find($id);
+        $count=$orders->like()->count();
+        dd($count);
 
         if (!$orders) {
             return response()->json([
