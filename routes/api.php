@@ -9,6 +9,7 @@ use App\Http\Controllers\Customer\HomeController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\popularController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SearchController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -62,7 +63,7 @@ Route::put('updateorder/{id}', [OrderController::class, 'update']);
 Route::delete('deleteorder/{id}', [OrderController::class, 'destroy']);
 
 
-Route::get('my_order', [OrderController::class, 'my_order']);
+
 
 
 //gallery
@@ -135,10 +136,13 @@ Route::post('/login-register', [LoginRegisterController::class, 'loginRegister']
 Route::get('login-confirm/{token}', [LoginRegisterController::class, 'loginConfirmForm'])->name('auth.customer.login-confirm-form');
 
 
+////profile
 
-
-
-
+Route::get('my-profile', [ProfileController::class, 'myProfile']);
+Route::post('change-password', [ProfileController::class, 'change_password']);
+Route::post('update-profile', [ProfileController::class, 'update_profile']);
+Route::get('my_order/{id}', [ProfileController::class, 'my_order']);
+Route::get('my_popular_order/{id}', [ProfileController::class, 'my_popular_order']);
 
 
 
