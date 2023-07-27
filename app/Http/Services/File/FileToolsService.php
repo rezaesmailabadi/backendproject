@@ -19,9 +19,6 @@ class FileToolsService
         $this->file = $file;
     }
 
-
-
-
     public function getExclusiveDirectory()
     {
         return $this->exclusiveDirectory;
@@ -32,9 +29,6 @@ class FileToolsService
         $this->exclusiveDirectory = trim($exclusiveDirectory, '/\\');
     }
 
-
-
-
     public function getFileDirectory()
     {
         return $this->fileDirectory;
@@ -44,9 +38,6 @@ class FileToolsService
         $this->fileDirectory = trim($fileDirectory, '/\\');
     }
 
-
-
-
     public function getFileSize()
     {
         return $this->fileSize;
@@ -55,8 +46,6 @@ class FileToolsService
     {
         $this->fileSize = $file->getSize();
     }
-
-
 
     public function getFileName()
     {
@@ -68,15 +57,11 @@ class FileToolsService
         $this->fileName = $fileName;
     }
 
-
-
     public function setCurrentFileName()
     {
             return !empty($this->file) ? $this->setFileName(pathinfo($this->file->getClientOriginalName(), PATHINFO_FILENAME)) : false;
             // $_FILES['file']['name']
     }
-
-
 
     public function getFileFormat()
     {
@@ -88,9 +73,6 @@ class FileToolsService
         $this->fileFormat = $fileFormat;
     }
 
-
-
-
     public function getFinalFileDirectory()
     {
         return $this->finalFileDirectory;
@@ -100,9 +82,6 @@ class FileToolsService
     {
         $this->finalFileDirectory = $finalFileDirectory;
     }
-
-
-
 
    public function getFinalFileName()
     {
@@ -114,9 +93,6 @@ class FileToolsService
         $this->finalFileName = $finalFileName;
     }
 
-
-
-
     protected function checkDirectory($fileDirectory)
     {
         if(!file_exists($fileDirectory))
@@ -125,8 +101,6 @@ class FileToolsService
         }
     }
 
-
-    
     public function getFileAddress()
     {
         return $this->finalFileDirectory . DIRECTORY_SEPARATOR . $this->finalFileName;

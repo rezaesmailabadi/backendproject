@@ -6,9 +6,6 @@ namespace App\Http\Services\File;
 class FileService extends FileToolsService
 {
 
-
-
-// ----------------------------------------------------------------------------------------------
     public function moveToPublic($file)
     {
         //set File
@@ -31,10 +28,6 @@ class FileService extends FileToolsService
         $result = $file->move(storage_path($this->getFinalFileDirectory()), $this->getFinalFileName());
         return $result ? $this->getFileAddress() : false;
     }
-
-// ---------------------------------------------------------------------------------------
-
-
 
 
     public function deleteFile($filePath)
