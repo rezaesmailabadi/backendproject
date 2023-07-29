@@ -21,9 +21,9 @@ class CreateUsersTable extends Migration
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('slug')->unique()->nullable();
-            $table->text('profile_photo_path')->nullable()->comment('avatar');
+            $table->longText('profile_photo_path')->nullable()->comment('avatar');
             $table->timestamp('email_verified_at')->nullable();
-           $table->timestamp('mobile_verified_at')->nullable();   
+            $table->timestamp('mobile_verified_at')->nullable();
             $table->string('password')->nullable();
             $table->tinyInteger('activition')->default(0)->comment('0 => inactive , 1=> active');
             $table->timestamp('activition_date')->nullable();
