@@ -64,10 +64,10 @@ class ProfileController extends Controller
 
 
 
-    public function change_password(request $request)
+    public function change_password(request $request ,$id)
     {
 
-        Auth::loginUsingId(2);
+        // Auth::loginUsingId(2);
         $validator = Validator::make($request->all(), [
             'old_password' => 'required',
             'password' => 'required|min:6|max:100',
@@ -81,7 +81,8 @@ class ProfileController extends Controller
             ], 422);
         }
 
-        $user = $request->user();
+        // $user = $request->user();
+        $user=user::find($id);
 
         if (Hash::check($request->old_password, $user->password)) {
 
