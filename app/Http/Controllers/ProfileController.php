@@ -112,7 +112,9 @@ class ProfileController extends Controller
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'national_code' => $request->national_code,
-            'profile_photo_path' => $request->profile_photo_path
+            'profile_photo_path' => $request->profile_photo_path,
+            'email'=>$request->email,
+            'mobile'=>$request->mobile
         ];
 
         
@@ -144,6 +146,8 @@ class ProfileController extends Controller
             'last_name' => $request->last_name,
             'national_code' => $request->national_code,
             'profile_photo_path' => $image_name,
+            'email' => $request->email,
+            'mobile' => $request->mobile,
         ]);
         return response()->json([
             'message' => "successfully"
