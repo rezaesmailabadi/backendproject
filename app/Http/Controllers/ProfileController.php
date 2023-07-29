@@ -102,7 +102,7 @@ $count_my_popular_orders=order::find($like)->count();
 
 
 
-    public function update_profile(Request $request, user $user, ImageService $imageService)
+    public function update_profile(Request $request, user $user, ImageService $imageService,$id)
     {
 
 
@@ -113,9 +113,10 @@ $count_my_popular_orders=order::find($like)->count();
             'profile_photo_path' => $request->profile_photo_path
         ];
 
-
-        Auth::loginUsingId(2);
-        $user = Auth()->user();
+        
+        // Auth::loginUsingId(2);
+        // $user = Auth()->user();
+        $user=user::find($id);
 
 
         if ($request->hasFile('profile_photo_path')) {
@@ -135,9 +136,9 @@ $count_my_popular_orders=order::find($like)->count();
             $image_name = $user->profile_photo_path;
         }
 
-
+    
         $user->update([
-            'firs_name' => $request->first_name,
+            'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'national_code' => $request->national_code,
             'profile_photo_path' => $image_name,

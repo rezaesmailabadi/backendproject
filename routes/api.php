@@ -140,7 +140,7 @@ Route::get('login-confirm/{token}', [LoginRegisterController::class, 'loginConfi
 
 Route::get('my-profile', [ProfileController::class, 'myProfile']);
 Route::post('change-password', [ProfileController::class, 'change_password']);
-Route::post('update-profile', [ProfileController::class, 'update_profile']);
+Route::post('update-profile/{id}', [ProfileController::class, 'update_profile']);
 Route::get('my_order/{id}', [ProfileController::class, 'my_order']);
 Route::get('my_popular_order/{id}', [ProfileController::class, 'my_popular_order']);
 
