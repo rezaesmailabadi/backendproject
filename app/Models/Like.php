@@ -14,6 +14,10 @@ class Like extends Model
     {
         return $this->belongsTo(user::class);
     }
-    
+
+    public function order()
+    {
+        return $this->belhongsTo(order::class);
+    }
 }
  
