@@ -45,12 +45,12 @@ class ProfileController extends Controller
 
 
         return response()->json([
-            'firstname' => $first_name,
-            'lastname' => $last_name,
+            'first_name' => $first_name,
+            'last_name' => $last_name,
             'email' => $email,
             'mobile' => $mobile,
-            'nationalcode' => $national_code,
-            'profilephoto' => $profile_photo_path,
+            'national_code' => $national_code,
+            'profile_photo_path' => $profile_photo_path,
             'count_my_orders' => $count_my_orders,
             'count_my_popular_orders' => $count_my_popular_orders,
 
@@ -105,7 +105,7 @@ class ProfileController extends Controller
 
 
 
-    public function update_profile(Request $request, user $user, ImageService $imageService,$id)
+    public function update_profile(Request $request, user $user, ImageService $imageService, $id)
     {
 
 
@@ -114,14 +114,14 @@ class ProfileController extends Controller
             'last_name' => $request->last_name,
             'national_code' => $request->national_code,
             'profile_photo_path' => $request->profile_photo_path,
-            'email'=>$request->email,
-            'mobile'=>$request->mobile
+            'email' => $request->email,
+            'mobile' => $request->mobile
         ];
 
-        
+
         // Auth::loginUsingId(2);
         // $user = Auth()->user();
-        $user=user::find($id);
+        $user = user::find($id);
 
 
         if ($request->hasFile('profile_photo_path')) {
@@ -141,12 +141,12 @@ class ProfileController extends Controller
             $image_name = $user->profile_photo_path;
         }
 
-    
+
         $user->update([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'national_code' => $request->national_code,
-            'profile_photo_path' => $image_name,
+            'profile_photo_path' => $request->profile_photo_path,
             'email' => $request->email,
             'mobile' => $request->mobile,
         ]);
