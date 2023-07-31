@@ -36,6 +36,8 @@ Route::get('/home', [HomeController::class, 'latestorder']);
 
 Route::get('/Categories', [CategoryController::class, 'index']);
 
+Route::get('/relatedproducts', [OrderController::class, 'Relatedproducts']);
+
 
 Route::get('orders', [OrderController::class, 'index']);
 Route::get('orders/{id}', [OrderController::class, 'show']);
