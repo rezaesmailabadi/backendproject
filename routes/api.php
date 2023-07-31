@@ -36,12 +36,14 @@ Route::get('/home', [HomeController::class, 'latestorder']);
 
 Route::get('/Categories', [CategoryController::class, 'index']);
 
+Route::get('/relatedproducts', [OrderController::class, 'Relatedproducts']);
 
-Route::get('orders',[OrderController::class,'index']);
-Route::get('orders/{id}',[OrderController::class,'show']);
-Route::post('addorder',[OrderController::class,'store']);
-Route::put('updateorder/{id}',[OrderController::class,'update']);
-Route::delete('deleteorder/{id}',[OrderController::class,'destroy']);
+
+Route::get('orders', [OrderController::class, 'index']);
+Route::get('orders/{id}', [OrderController::class, 'show']);
+Route::post('addorder', [OrderController::class, 'store']);
+Route::put('updateorder/{id}', [OrderController::class, 'update']);
+Route::delete('deleteorder/{id}', [OrderController::class, 'destroy']);
 // اگر نشد / رو بزار
 Route::get('orders', [OrderController::class, 'index']); //new
 Route::get('orders/{id}', [OrderController::class, 'show']);

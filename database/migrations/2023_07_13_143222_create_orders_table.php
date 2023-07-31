@@ -31,11 +31,12 @@ class CreateOrdersTable extends Migration
             $table->foreignId('user_id')->nullable()->constrained('users')->onUpdate('cascade')->onDelete('cascade');
 
 
+
             $table->foreignId('category_id')->nullable()->constrained('categories')->onUpdate('cascade')->onDelete('cascade');
 
+            $table->timestamp('delivery_date');
 
 
-            // $table->timestamp('published_at');
             $table->timestamps();
             $table->softDeletes();
         });
