@@ -154,4 +154,4 @@ Route::get('/logout', [LoginRegisterController::class, 'logout'])->name('auth.cu
 
 
 
-Route::get('search/{key}', [SearchController::class, 'search']);
+Route::get('search/{request?}', [SearchController::class, 'search']);
