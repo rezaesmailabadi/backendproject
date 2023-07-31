@@ -146,6 +146,9 @@ Route::post('update-profile/{id}', [ProfileController::class, 'update_profile'])
 Route::get('my_order/{id}', [ProfileController::class, 'my_order']);
 Route::get('my_popular_order/{id}', [ProfileController::class, 'my_popular_order']);
 
+//آگهی در انتظار تایید
+Route::get('Awaiting_confirmation/{id}', [ProfileController::class, 'Awaiting_confirmation']);
+
 
 
 
@@ -157,3 +160,7 @@ Route::get('/logout', [LoginRegisterController::class, 'logout'])->name('auth.cu
 
 
 Route::get('search/{request?}', [SearchController::class, 'search']);
+
+
+//filter min_price max_price
+Route::get('filterprice/{price?}', [SearchController::class, 'price']);

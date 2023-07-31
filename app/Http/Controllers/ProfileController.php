@@ -162,7 +162,7 @@ class ProfileController extends Controller
     {
 
 
-        $orders = Order::where('user_id', $id)->get();
+        $orders = Order::where('user_id', $id)->where('publishable',1)->get();
         if (!$orders) {
             return response()->json([
                 'message' => "not found"
@@ -191,5 +191,30 @@ class ProfileController extends Controller
         return response()->json([
             'my_popular_order' => $my_popular_order,
         ], 200);
+
+
+
+}
+        public function Awaiting_confirmation($id)
+    {
+        $order = Order::where('user_id', $id)->where('publishable',0)->get();
+    
+        
+
+
+        if (!$order) {
+            return response()->json([
+                'message' => "not found"
+            ], 404);
+        }
+
+
+
+        return response()->json([
+            'my_await_order' => $order,
+        ], 200);
     }
+
+
+    
 }

@@ -12,7 +12,8 @@ class OrderController extends Controller
 {
     public function index(Order $order)
     {
-        $orders = Order::all();
+        $orders=Order::where('publishable',1)->get();
+        // $orders = Order::all();
         return response()->json([
             'results' => $orders
         ], 200);
