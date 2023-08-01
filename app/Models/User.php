@@ -27,6 +27,7 @@ class User extends Authenticatable
         'activation',
         'profile_photo_path',
         'password',
+        'token',
         'email_verified_at',
         'mobile_verified_at',
         'national_code',
@@ -39,6 +40,7 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
+        'token',
         'remember_token',
         'two_factor_recovery_codes',
         'two_factor_secret',
@@ -51,12 +53,10 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-       
+
     ];
     public function orders()
     {
         return $this->hasMany(Order::class);
     }
-    
-    
 }
