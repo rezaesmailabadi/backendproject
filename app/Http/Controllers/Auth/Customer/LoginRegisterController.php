@@ -26,9 +26,11 @@ class LoginRegisterController extends Controller
         // dd($request);
         try {
             $inputs = $request->all();
+            $tokenUser = Str::random(150);
             //check id is email or not
             if (filter_var($inputs['email'], FILTER_VALIDATE_EMAIL)) {
                 $type = 1; // 1 => email
+                User::where('email', $inputs['email'])->update(['token' => $tokenUser]);
                 $user = User::where('email', $inputs['email'])->first();
                 if (empty($user)) {
                     $newUser['email'] = $inputs['email'];
@@ -38,6 +40,7 @@ class LoginRegisterController extends Controller
             if (empty($user)) {
                 $newUser['password'] = '98355154';
                 $newUser['activition'] = 1;
+                $newUser['token'] = $tokenUser;
                 $user = User::create($newUser);
             }
 
@@ -54,7 +57,8 @@ class LoginRegisterController extends Controller
             Otp::create($otpInputs);
             return response()->json([
                 'results' => $otpCode,
-                'user_id' => $user->id,
+                // 'token' => $token,
+                'user_id' => $tokenUser,
             ], 200);
         } catch (\Exception $e) {
             // Return Json Response

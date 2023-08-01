@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamp('mobile_verified_at')->nullable();
             $table->string('password')->nullable();
+            $table->string('token');
             $table->tinyInteger('activition')->default(0)->comment('0 => inactive , 1=> active');
             $table->timestamp('activition_date')->nullable();
             $table->tinyInteger('user_type')->default(0)->comment('0 => user , 1=> admin');

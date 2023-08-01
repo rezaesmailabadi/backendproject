@@ -26,16 +26,17 @@ class CreateOrdersTable extends Migration
             $table->decimal('min_price', 20, 3);
             $table->decimal('max_price', 20, 3);
             $table->tinyInteger('status')->default(0);
-            $table->tinyInteger('publishable')->default(1)->comment('1 => publishable, 0 => is not publishable');
+            $table->tinyInteger('publishable')->default(0)->comment('1 => publishable, 0 => is not publishable');
             $table->string('tags')->nullable();
             $table->foreignId('user_id')->nullable()->constrained('users')->onUpdate('cascade')->onDelete('cascade');
 
 
+
             $table->foreignId('category_id')->nullable()->constrained('categories')->onUpdate('cascade')->onDelete('cascade');
 
+            $table->timestamp('delivery_date');
 
 
-            // $table->timestamp('published_at');
             $table->timestamps();
             $table->softDeletes();
         });

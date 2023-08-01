@@ -17,12 +17,22 @@ use Illuminate\Support\Facades\File as FacadesFile;
 
 class ProfileController extends Controller
 {
+
+    public function getUser($token)
+    {
+        $user = User::where('token', $token)->first();
+        if (!$user) {
+            return abort(401);
+        }
+        return $user;
+    }
+
     public function myProfile($id)
     {
         // Auth::loginUsingId(1);
         // dd("hi");
 
-        $user = User::where('id', $id)->first();
+        $user = $this->getUser($id);
 
         $first_name = $user->first_name;
         $last_name = $user->last_name;
@@ -65,7 +75,7 @@ class ProfileController extends Controller
 
 
 
-    public function change_password(request $request ,$id)
+    public function change_password(request $request, $id)
     {
 
         // Auth::loginUsingId(2);
@@ -83,7 +93,7 @@ class ProfileController extends Controller
         }
 
         // $user = $request->user();
-        $user=user::find($id);
+        $user = $this->getUser($id);
 
         if (Hash::check($request->old_password, $user->password)) {
 
@@ -122,7 +132,7 @@ class ProfileController extends Controller
 
         // Auth::loginUsingId(2);
         // $user = Auth()->user();
-        $user = user::find($id);
+        $user = $this->getUser($id);
 
 
         if ($request->hasFile('profile_photo_path')) {
@@ -162,8 +172,8 @@ class ProfileController extends Controller
     public function my_order(Order $order, $id)
     {
 
-
-        $orders = Order::where('user_id', $id)->get();
+        $user = $this->getUser($id);
+        $orders = Order::where('user_id', $user->id)->where('publishable', 1)->get();
         if (!$orders) {
             return response()->json([
                 'message' => "not found"
@@ -176,7 +186,8 @@ class ProfileController extends Controller
 
     public function my_popular_order($id, Like $like)
     {
-        $like = Like::where('user_id', $id)->get('order_id');
+        $user = $this->getUser($id);
+        $like = Like::where('user_id', $user->id)->get('order_id');
         // dd($like);
         $my_popular_order = order::find($like);
 
@@ -191,6 +202,26 @@ class ProfileController extends Controller
 
         return response()->json([
             'my_popular_order' => $my_popular_order,
+        ], 200);
+    }
+    public function Awaiting_confirmation($id)
+    {
+        $user = $this->getUser($id);
+        $order = Order::where('user_id', $user->id)->where('publishable', 0)->get();
+
+
+
+
+        if (!$order) {
+            return response()->json([
+                'message' => "not found"
+            ], 404);
+        }
+
+
+
+        return response()->json([
+            'my_await_order' => $order,
         ], 200);
     }
 }

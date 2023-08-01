@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\OrderRequest;
+use App\Models\User;
 use App\Models\Order;
 use App\Models\OrderImage;
 use Illuminate\Http\Request;
@@ -12,7 +13,8 @@ class OrderController extends Controller
 {
     public function index(Order $order)
     {
-        $orders = Order::all();
+        $orders = Order::where('publishable', 1)->get();
+        // $orders = Order::all();
         return response()->json([
             'results' => $orders
         ], 200);
@@ -25,7 +27,7 @@ class OrderController extends Controller
 
 
         $orders =  Order::find($id);
-        $count=$orders->like()->count();
+        $count = $orders->like()->count();
         dd($count);
 
         if (!$orders) {
@@ -46,97 +48,64 @@ class OrderController extends Controller
         ], 200);
     }
 
+    public function getUser($token)
+    {
+        $user = User::where('token', $token)->first();
+        if (!$user) {
+            return abort(401);
+        }
+        return $user;
+    }
+
 
 
     public function store(Request $request)
     {
 
-        try {
+        // try {
+        $inputs = $request->all();
+        $newOrder['user_id'] = $this->getUser($inputs['user_id'])->id;
+        $newOrder['title'] = $inputs['title'];
+        $newOrder['image_one'] = $inputs['image1'];
+        $newOrder['image_two'] = $inputs['image2'];
+        $newOrder['image_three'] = $inputs['image3'];
+        $newOrder['introduction'] = $inputs['introduction'];
+        $newOrder['nardeban'] = $inputs['nardeban'];
+        $newOrder['urgent'] = $inputs['urgent'];
+        $newOrder['min_price'] = $inputs['min_price'];
+        $newOrder['max_price'] = $inputs['max_price'];
+        $newOrder['category_id'] = $inputs['order_category'];
+        $newOrder['delivery_date'] = $inputs['delivery_date'];
+        Order::create($newOrder);
+        return response()->json([
+            'message' => "successfully"
+        ], 200);
 
-            $inputs = $request->all();
-
-
-            // dd($inputs['user_id']);
-            $newOrder['user_id'] = $inputs['user_id'];
-
-            $newOrder['title'] = $inputs['title'];
-
-            $newOrder['image_one'] = $inputs['image1'];
-            $newOrder['image_two'] = $inputs['image2'];
-            $newOrder['image_three'] = $inputs['image3'];
-
-            // $newOrder['category_id'] = $inputs['category_id'];
-            $newOrder['introduction'] = $inputs['introduction'];
-            $newOrder['nardeban'] = $inputs['nardeban'];
-            $newOrder['urgent'] = $inputs['urgent'];
-            $newOrder['min_price'] = $inputs['min_price'];
-            $newOrder['max_price'] = $inputs['max_price'];
-            $newOrder['category_id'] = $inputs['order_category'];
-            Order::create($newOrder);
-            // foreach ($request->file('images') as $imagefile) {
-            //     $image = new OrderImage();
-            //     $path = $imagefile->store('/images/resource', ['disk' =>   'my_files']);
-            //     $image->url = $path;
-            //     $order = new Order;
-            //     $image->order_id = $order->id;
-            //     $image->save();
-            // }
-            return response()->json([
-                'message' => "successfully"
-            ], 200);
-        } catch (\Exception $e) {
-
-            return response()->json([
-                'message' => "wrong"
-            ], 500);
-        }
         // dd($request);
     }
 
 
 
 
-    public function update(OrderRequest $request, $id)
+    public function update(request $request, $id)
     {
 
 
         try {
-
-            $orders =  Order::find($id);
-            // dd($tickets);
-
-            if (!$orders) {
-                return $orders()->json([
-                    'message' => "not found"
-                ], 404);
-            }
-
-            $realTimestampStart = substr($request->published_at, 0, 10);
-
-            $inputs['published_at'] = date("Y-m-d H:i:s", (int)$realTimestampStart);
-
-
-            $orders->title = $request->title;
-            $orders->introduction = $request->introduction;
-            $orders->image = $request->image;
-            $orders->status = $request->status;
-            $orders->tags = $request->tags;
-            $orders->price = $request->price;
-            $orders->publishable = $request->publishable;
-            $orders->category_id = $request->category_id;
-            $orders->email = $request->email;
-            $orders->mobile = $request->mobile;
-            $orders->first_name = $request->first_name;
-            $orders->last_name = $request->last_name;
-
-
-
-            // dd($tickets);
-            $orders->save();
-
-
-
-
+            $order = Order::where('id', $id)->get();
+            $order['user_id'] = $this->getUser($request['user_id'])->id;
+            $order['title'] = $request['title'];
+            $order['image_one'] = $request['image1'];
+            $order['image_two'] = $request['image2'];
+            $order['image_three'] = $request['image3'];
+            $order['introduction'] = $request['introduction'];
+            $order['nardeban'] = $request['nardeban'];
+            $order['urgent'] = $request['urgent'];
+            $order['min_price'] = $request['min_price'];
+            $order['max_price'] = $request['max_price'];
+            $order['category_id'] = $request['order_category'];
+            $order['delivery_date'] = $request['delivery_date'];
+            $order->update();
             return response()->json([
                 'message' => "successfully"
             ], 200);
@@ -151,21 +120,21 @@ class OrderController extends Controller
 
     public function destroy($id)
     {
-
-
-        $orders = Order::find($id);
-
-        if (!$orders) {
+        $order = Order::where('id', $id)->get();
+        if (!$order) {
             return response()->json([
                 'message' => "not found"
             ], 404);
         }
-        $orders->delete();
-
+        $order->delete();
         return response()->json([
             'message' => "sussessfully"
         ], 200);
     }
+
+
+
+
 
 
     public function my_order()
@@ -214,4 +183,26 @@ class OrderController extends Controller
             'results' => $orders
         ], 200);
     }
+
+
+
+
+    public function Relatedproducts(request $request)
+    {
+
+        $raltedproducts = Order::where('category_id', $request->category_id)->get();
+        return response()->json([
+            'results' => $raltedproducts
+        ], 200);
+    }
 }
+
+
+      // foreach ($request->file('images') as $imagefile) {
+            //     $image = new OrderImage();
+            //     $path = $imagefile->store('/images/resource', ['disk' =>   'my_files']);
+            //     $image->url = $path;
+            //     $order = new Order;
+            //     $image->order_id = $order->id;
+            //     $image->save();
+            // }
