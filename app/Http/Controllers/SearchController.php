@@ -13,6 +13,7 @@ class SearchController extends Controller
     {
         // $order_query=Order::with(['user','category']);
         $order_query=Order::with(['category']);
+
         if($request->keyword)
         {
             $order_query->where('title',"LIKE","%".$request->keyword."%")
@@ -24,38 +25,9 @@ class SearchController extends Controller
                 $query->where('slug',$request->category);
             });
         }
-
-
-        // if($request->user_id){
-        //     $order_query->where('user_id',$request->user_id);
-        // }
-
-        // if($request->sortBy && in_array($request->sortBy,['id','creates_at'])){
-        //     $sortBy=$request->sortBy;
-        // }
-        // else{
-        //     $sortBy='id';
-        // }
-        // if($request->sortOrder && in_array($request->sortOrder,['asc','desc'])){
-        //     $sortOrder=$request->sortOrder;
-        // }
-        // else{
-        //     $sortOrder='desc';
-        // }
-        // if($request->perPage){
-        //     $perPage=$request->perPage;
-        // }
-        // else{
-        //     $perPage=5;
-        // }
-
-        // if($request->paginate){
-        //     $order=$order_query->orderBy($sortBy,$sortOrder)->paginate($perPage);
-
-        // }
-        // else{
             $order=$order_query->get();
-        // }
+
+
 
         return response()->json([
             'message'=>'order successfully fetched',
@@ -75,8 +47,6 @@ class SearchController extends Controller
         $order_query=Order::with(['category']);
 
 
-
-
         $orders = $request->max_price && $request->min_price ? $order_query->whereBetween('price', [$request->min_price, $request->max_price]) :
         $order_query->when($request->min_price, function ($query) use ($request) {
             $query->where('price', '>=', $request->min_price)->get();
@@ -87,8 +57,7 @@ class SearchController extends Controller
         });
        
             $order=$order_query->get();
-      
-
+            
         return response()->json([
             'message'=>'order successfully fetched',
             'data'=>$order

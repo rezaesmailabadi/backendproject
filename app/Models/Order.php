@@ -41,13 +41,7 @@ class Order extends Model
         ];
     }
 
-
-
     protected $casts = ['image' => 'array'];
-
-
-
-
 
 
     /**
@@ -64,7 +58,6 @@ class Order extends Model
     protected $fillable = ['title', 'introduction', 'min_price', 'max_price', 'category_id', 'publishable','user_id', 'image_one', 'image_two', 'image_three', 'urgent', 'nardeban', 'delivery_date'];
     public function user()
     {
-
         return $this->belongsTo(User::class, 'user_id');
     }
     public function category()

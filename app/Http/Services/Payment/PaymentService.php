@@ -30,15 +30,11 @@ class PaymentService
         $lang = 'fa';
         $zarinpal = new Zarinpal($merchantID, $client, $lang, $sandbox, $zarinpalGate, $zarinpalGatePSP);
 
-
         $payment = [
             'callback_url' => route('customer.sales-process.payment-call-back', [$order, $onlinePayment]), // Required
             'amount' => (int)$amount * 10,
             'description' => 'the order',
         ];
-
-
-
         try {
             $response = $zarinpal->request($payment);
             $code = $response['data']['code'];  // 
@@ -87,6 +83,19 @@ class PaymentService
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+    
 
 
     function resultCodes($code)
@@ -184,4 +193,7 @@ class PaymentService
                 return "وضعیت مشخص شده معتبر نیست";
         }
     }
+
+
+    
 }
