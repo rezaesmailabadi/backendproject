@@ -8,10 +8,7 @@ use Coderflex\Laravisit\Concerns\HasVisits;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
-
-
-
+use Illuminate\Notifications\Notifiable;
 
 class Order extends Model
 {
@@ -19,7 +16,7 @@ class Order extends Model
 
     use HasFactory;
     // use HasVisits;
-
+    use Notifiable;
 
     // use CyrildeWit\EloquentViewable\InteractsWithViews;
     // use CyrildeWit\EloquentViewable\Contracts\Viewable;
@@ -64,7 +61,7 @@ class Order extends Model
     // protected $fillable = ['title', 'introduction', 'slug', 'image', 'status', 'tags', 'price', 'publishable', 'category_id', 'email', 'mobile', 'first_name', 'user_id', 'last_name', 'published_at'];
     // public function user()
 
-    protected $fillable = ['title', 'introduction', 'min_price', 'max_price', 'category_id', 'user_id', 'image_one', 'image_two', 'image_three', 'urgent', 'nardeban', 'delivery_date'];
+    protected $fillable = ['title', 'introduction', 'min_price', 'max_price', 'category_id', 'publishable','user_id', 'image_one', 'image_two', 'image_three', 'urgent', 'nardeban', 'delivery_date'];
     public function user()
     {
 
