@@ -122,5 +122,13 @@ Route::get('filterprice/{price?}', [SearchController::class, 'price']);
 
 
 Route::post('suggest', [SuggestController::class, 'suggest']);
+
+
 Route::get('my_order_suggest/{order_id}', [SuggestController::class, 'my_order_suggest']);
+
+//ارسال ایمیل و نوتیفکیشن برای کاربر 
 Route::post('sendemail/{id}', [SuggestController::class, 'sendemail']);
+
+
+//نوتیفکیشن های خوانده نشده
+Route::get('markasread/{id}', [SuggestController::class, 'markasread']);

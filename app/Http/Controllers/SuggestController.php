@@ -64,7 +64,7 @@ class SuggestController extends Controller
      {
      
         $data=Order::find($id);
-        $tomail=User::where('id',$data->user_id)->get("email");
+        $tomail=User::where('id',$data->user_id)->get();
         // dd($tomail);
 
       
@@ -79,13 +79,28 @@ class SuggestController extends Controller
 
         ];
         Notification::send($tomail,new SendEmailNotification($details));
+       
+
+
         return response()->json([
         'message' => "successfully",
         'email'=> $details
     ], 200);
      }
 
-
+public function markasread($id)
+{
+    if($id){
+      $user=user::find($id);
+      $unread=$user->unreadNotifications;
+      
+    
+      return response()->json([
+        'message' => "successfully",
+        'notifications'=> $unread
+    ], 200);
+    }
+}
 
     }
 

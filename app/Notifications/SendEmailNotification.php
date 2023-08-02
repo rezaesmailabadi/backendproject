@@ -31,7 +31,7 @@ class SendEmailNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['mail','database'];
     }
 
     /**
@@ -58,7 +58,9 @@ class SendEmailNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            //
+           
+            'statuse' =>'success',
+            'data'=>$this->details,
         ];
     }
 }
