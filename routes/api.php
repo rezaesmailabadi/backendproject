@@ -12,6 +12,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\popularController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\SuggestController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -119,3 +120,17 @@ Route::get('search/{request?}', [SearchController::class, 'search']);
 
 //filter min_price max_price
 Route::get('filterprice/{price?}', [SearchController::class, 'price']);
+
+
+
+Route::post('suggest', [SuggestController::class, 'suggest']);
+
+
+Route::get('my_order_suggest/{order_id}', [SuggestController::class, 'my_order_suggest']);
+
+//ارسال ایمیل و نوتیفکیشن برای کاربر 
+Route::post('sendemail/{id}', [SuggestController::class, 'sendemail']);
+
+
+//نوتیفکیشن های خوانده نشده
+Route::get('markasread/{id}', [SuggestController::class, 'markasread']);
