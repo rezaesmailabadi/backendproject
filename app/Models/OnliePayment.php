@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class OnliePayment extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'amount',
+        'user_id',
+        'status',
+        'status_bank',
+        'transaction_id',
+    ];
 }

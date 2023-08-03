@@ -106,13 +106,15 @@ Route::get('payment', [PaymentController::class, 'paymentSubmit']);
 
 
 
-
 //آگهی در انتظار تایید
 Route::get('Awaiting_confirmation/{id}', [ProfileController::class, 'Awaiting_confirmation']);
 
 
 //search
 Route::get('search/{request?}', [SearchController::class, 'search']);
+
+
+
 
 
 //filter min_price max_price
