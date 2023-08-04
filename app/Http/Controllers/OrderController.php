@@ -13,7 +13,7 @@ class OrderController extends Controller
 {
     public function index(Order $order)
     {
-        $orders = Order::where('publishable', 1)->get();
+        $orders = Order::where('publishable', 0)->get();
         // $orders = Order::all();
         return response()->json([
             'results' => $orders
@@ -62,6 +62,10 @@ class OrderController extends Controller
     public function store(Request $request)
     {
 
+        // return response()->json([
+        //     'message' => "successfully",
+        //     'data' => $request
+        // ], 200);
         // try {
         $inputs = $request->all();
         $newOrder['user_id'] = $this->getUser($inputs['user_id'])->id;
@@ -95,26 +99,33 @@ class OrderController extends Controller
 
         try {
             $order = Order::where('id', $id)->get();
-            $order['user_id'] = $this->getUser($request['user_id'])->id;
-            $order['title'] = $request['title'];
-            $order['image_one'] = $request['image1'];
-            $order['image_two'] = $request['image2'];
-            $order['image_three'] = $request['image3'];
-            $order['introduction'] = $request['introduction'];
-            $order['nardeban'] = $request['nardeban'];
-            $order['urgent'] = $request['urgent'];
-            $order['min_price'] = $request['min_price'];
-            $order['max_price'] = $request['max_price'];
-            $order['category_id'] = $request['order_category'];
-            $order['delivery_date'] = $request['delivery_date'];
-            $order->update();
+
+            $updatedOrder = $order[0];
+
+            $updatedOrder['user_id'] = $this->getUser($request['user_id'])->id;
+            $updatedOrder['title'] = $request['title'];
+            $updatedOrder['image_one'] = $request['image_one'];
+            $updatedOrder['image_two'] = $request['image_two'];
+            $updatedOrder['image_three'] = $request['image_three'];
+            $updatedOrder['introduction'] = $request['introduction'];
+            $updatedOrder['nardeban'] = $request['nardeban'];
+            $updatedOrder['urgent'] = $request['urgent'];
+            $updatedOrder['min_price'] = $request['min_price'];
+            $updatedOrder['max_price'] = $request['max_price'];
+            $updatedOrder['category_id'] = $request['order_category'];
+            $updatedOrder['delivery_date'] = $request['delivery_date'];
+            $updatedOrder['token'] = $request['token'];
+            $updatedOrder['publishable'] = 0;
+
+            $updatedOrder->update();
             return response()->json([
                 'message' => "successfully"
             ], 200);
         } catch (\Exception $e) {
 
             return response()->json([
-                'message' => "wrong"
+                'message' => "wrong",
+                'data' => $order[0]['token']
             ], 500);
         }
     }

@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class SearchController extends Controller
 {
 
-    public function search(Request $request, $query)
+    public function search(Request $request)
     {
 
 
@@ -23,18 +23,19 @@ class SearchController extends Controller
 
         // return response()->json([
         //     'message' => 'order successfully fetched',
-        //     'data' => $category_id
+        //     'data' => $text_search
         // ], 200);
 
 
 
         if ($request->filled('text_search') && $request->filled('category_id')) {
-            $orders = Order::where('title', "LIKE", "%" . $text_search . "%")->orwhere('introduction', "LIKE", "%" . $text_search  . "%")->where('category_id', $category_id)->get();
+            $orders = Order::where('title', "LIKE", "%" . $text_search . "%")->where('category_id', $category_id)->orwhere('introduction', "LIKE", "%" . $text_search  . "%")->where('category_id', $category_id)->get();
             return response()->json([
                 'message' => 'order ',
                 'data' => $orders
             ], 200);
-        } else {
+        }
+        else {
             if ($request->text_search) {
                 $orders = Order::where('title', "LIKE", "%" . $text_search . "%")->orwhere('introduction', "LIKE", "%" . $text_search  . "%")->get();
                 return response()->json([

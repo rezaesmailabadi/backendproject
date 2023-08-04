@@ -29,7 +29,7 @@ class CreateOrdersTable extends Migration
             $table->tinyInteger('publishable')->default(0)->comment('1 => publishable, 0 => is not publishable');
             $table->string('tags')->nullable();
             $table->foreignId('user_id')->nullable()->constrained('users')->onUpdate('cascade')->onDelete('cascade');
-            $table->string('token')->nullable();
+            $table->string('token');
 
 
 
