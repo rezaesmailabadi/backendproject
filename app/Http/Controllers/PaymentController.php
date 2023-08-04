@@ -28,7 +28,7 @@ class PaymentController extends Controller
         return $user;
     }
 
-    public function paymentSubmit(Request $request, PaymentService $paymentService)
+    public function paymentSubmit(Request $request)
     {
         $user = $this->getUser($request->id);
         $order = Order::where('user_id', $user->id)->first();

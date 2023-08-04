@@ -112,21 +112,13 @@ Route::get('Awaiting_confirmation/{id}', [ProfileController::class, 'Awaiting_co
 
 
 //search
-Route::get('search/{request?}', [SearchController::class, 'search']);
-
-
-
+Route::get('search', [SearchController::class, 'search']);
 
 
 //filter min_price max_price
-Route::get('filterprice/{price?}', [SearchController::class, 'price']);
+Route::get('filterprice', [SearchController::class, 'price']);
 
 
-
-Route::post('suggest', [SuggestController::class, 'suggest']);
-
-
-Route::get('my_order_suggest/{order_id}', [SuggestController::class, 'my_order_suggest']);
 
 //ارسال ایمیل و نوتیفکیشن برای کاربر 
 Route::post('sendemail/{id}', [SuggestController::class, 'sendemail']);
@@ -134,3 +126,7 @@ Route::post('sendemail/{id}', [SuggestController::class, 'sendemail']);
 
 //نوتیفکیشن های خوانده نشده
 Route::get('markasread/{id}', [SuggestController::class, 'markasread']);
+
+Route::post('suggest', [SuggestController::class, 'suggest']);
+
+Route::get('my_order_suggest/{order_id}', [SuggestController::class, 'my_order_suggest']);

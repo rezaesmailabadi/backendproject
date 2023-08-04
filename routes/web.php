@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,3 +22,5 @@ Route::get('/', function () {
 });
 
 Route::get('payment-verify', [PaymentController::class, 'paymentVerify'])->name('paymentVerify');
+
+Route::get('filterprice', [SearchController::class, 'price']);
