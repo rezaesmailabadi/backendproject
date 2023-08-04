@@ -76,6 +76,8 @@ class OrderController extends Controller
         $newOrder['max_price'] = $inputs['max_price'];
         $newOrder['category_id'] = $inputs['order_category'];
         $newOrder['delivery_date'] = $inputs['delivery_date'];
+        $newOrder['token'] = $inputs['token'];
+
         Order::create($newOrder);
         return response()->json([
             'message' => "successfully"
@@ -187,10 +189,10 @@ class OrderController extends Controller
 
 
 
-    public function Relatedproducts(request $request)
+    public function Relatedproducts(request $request, $id)
     {
-
-        $raltedproducts = Order::where('category_id', $request->category_id)->get();
+        // dd($request);
+        $raltedproducts = Order::where('category_id', $id)->get();
         return response()->json([
             'results' => $raltedproducts
         ], 200);

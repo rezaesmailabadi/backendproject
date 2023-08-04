@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\SearchController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,3 +19,4 @@ Route::any('/test', [OrderController::class, 'store']);
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/search/{request?}', [SearchController::class, 'search']);
