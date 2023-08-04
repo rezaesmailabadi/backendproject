@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class PriveOrder extends Model
 {
     use HasFactory;
+
+    protected $fillabale = [
+        'name',
+        'price',
+    ];
+
+
+
 }

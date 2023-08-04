@@ -12,6 +12,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\popularController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\SuggestController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -104,14 +105,26 @@ Route::get('payment', [PaymentController::class, 'paymentSubmit']);
 
 
 
-
 //آگهی در انتظار تایید
 Route::get('Awaiting_confirmation/{id}', [ProfileController::class, 'Awaiting_confirmation']);
 
 
 //search
-Route::get('search/{query?}', [SearchController::class, 'search']);
+Route::get('search', [SearchController::class, 'search']);
 
 
 //filter min_price max_price
-Route::get('filterprice/{request?}', [SearchController::class, 'price']);
+Route::get('filterprice', [SearchController::class, 'price']);
+
+
+
+//ارسال ایمیل و نوتیفکیشن برای کاربر 
+Route::post('sendemail/{id}', [SuggestController::class, 'sendemail']);
+
+
+//نوتیفکیشن های خوانده نشده
+Route::get('markasread/{id}', [SuggestController::class, 'markasread']);
+
+Route::post('suggest', [SuggestController::class, 'suggest']);
+
+Route::get('my_order_suggest/{order_id}', [SuggestController::class, 'my_order_suggest']);

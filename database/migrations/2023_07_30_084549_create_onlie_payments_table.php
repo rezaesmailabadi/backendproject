@@ -19,9 +19,8 @@ class CreateOnliePaymentsTable extends Migration
             $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->string('gateway')->nullable();
             $table->string('transaction_id')->nullable();
-            $table->text('bank_first_response')->nullable();
-            $table->text('bank_second_response')->nullable();
             $table->tinyInteger('status')->default(0);
+            $table->tinyInteger('status_bank')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

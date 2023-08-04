@@ -23,8 +23,8 @@ class CreateOrdersTable extends Migration
             $table->longText('image_one')->nullable();
             $table->longText('image_two')->nullable();
             $table->longText('image_three')->nullable();
-            $table->decimal('min_price', 20, 3);
-            $table->decimal('max_price', 20, 3);
+            $table->integer('min_price');
+            $table->integer('max_price');
             $table->tinyInteger('status')->default(0);
             $table->tinyInteger('publishable')->default(0)->comment('1 => publishable, 0 => is not publishable');
             $table->string('tags')->nullable();
