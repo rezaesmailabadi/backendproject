@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\OrderRequest;
+use App\Models\Faveriteorder;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\OrderImage;
@@ -61,6 +62,10 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
+
+
+        // $order = new Order;
+
 
         // try {
         $inputs = $request->all();
@@ -193,6 +198,18 @@ class OrderController extends Controller
         $raltedproducts = Order::where('category_id', $request->category_id)->get();
         return response()->json([
             'results' => $raltedproducts
+        ], 200);
+    }
+
+
+    public function faveriteorder(Request $request)
+    {
+        $inputs = $request->all();
+        $newOrder['user_id'] = $this->getUser($inputs['user_id'])->id;
+        $newOrder['order_id'] = $inputs['order_id'];
+        Faveriteorder::create($newOrder);
+        return response()->json([
+            'results' => 'ok',
         ], 200);
     }
 }

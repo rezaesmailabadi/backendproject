@@ -50,6 +50,8 @@ Route::get('ordercategory/{id}', [CategoryController::class, 'ordercategory']);
 Route::get('order-datails/{id}', [OrderController::class, 'datail']);
 Route::put('updateorder/{id}', [OrderController::class, 'update']);
 Route::delete('deleteorder/{id}', [OrderController::class, 'destroy']);
+Route::get('faveriteorder', [OrderController::class, 'faveriteorder']);
+
 
 
 
