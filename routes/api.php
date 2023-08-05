@@ -38,13 +38,11 @@ Route::get('/home', [HomeController::class, 'latestorder']);
 
 
 //order
-Route::get('/relatedproducts', [OrderController::class, 'Relatedproducts']);
+Route::get('relatedproducts/{id}', [OrderController::class, 'Relatedproducts']);
 Route::get('orders', [OrderController::class, 'index']);
 Route::get('orders/{id}', [OrderController::class, 'show']);
 // Route::post('addorder', [OrderController::class, 'store']);
 Route::any('addorder', [OrderController::class, 'store']);
-Route::put('updateorder/{id}', [OrderController::class, 'update']);
-Route::delete('deleteorder/{id}', [OrderController::class, 'destroy']);
 Route::get('newsorder', [OrderController::class, 'newsorder']); //new
 Route::get('ordercategory/{id}', [CategoryController::class, 'ordercategory']);
 Route::get('order-datails/{id}', [OrderController::class, 'datail']);

@@ -29,12 +29,13 @@ class CreateOrdersTable extends Migration
             $table->tinyInteger('publishable')->default(0)->comment('1 => publishable, 0 => is not publishable');
             $table->string('tags')->nullable();
             $table->foreignId('user_id')->nullable()->constrained('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->string('token');
 
 
 
             $table->foreignId('category_id')->nullable()->constrained('categories')->onUpdate('cascade')->onDelete('cascade');
 
-            $table->timestamp('delivery_date');
+            $table->string('delivery_date');
 
 
             $table->timestamps();

@@ -63,6 +63,7 @@ class ProfileController extends Controller
             'profile_photo_path' => $profile_photo_path,
             'count_my_orders' => $count_my_orders,
             'count_my_popular_orders' => $count_my_popular_orders,
+            'password' => $password,
 
 
             // 'password' => $password
