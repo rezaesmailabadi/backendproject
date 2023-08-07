@@ -23,18 +23,19 @@ class CreateOrdersTable extends Migration
             $table->longText('image_one')->nullable();
             $table->longText('image_two')->nullable();
             $table->longText('image_three')->nullable();
-            $table->decimal('min_price', 20, 3);
-            $table->decimal('max_price', 20, 3);
+            $table->integer('min_price');
+            $table->integer('max_price');
             $table->tinyInteger('status')->default(0);
             $table->tinyInteger('publishable')->default(0)->comment('1 => publishable, 0 => is not publishable');
             $table->string('tags')->nullable();
             $table->foreignId('user_id')->nullable()->constrained('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->string('token');
 
 
 
             $table->foreignId('category_id')->nullable()->constrained('categories')->onUpdate('cascade')->onDelete('cascade');
 
-            $table->timestamp('delivery_date');
+            $table->string('delivery_date');
 
 
             $table->timestamps();

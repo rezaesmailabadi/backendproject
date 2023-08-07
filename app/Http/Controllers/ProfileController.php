@@ -63,6 +63,7 @@ class ProfileController extends Controller
             'profile_photo_path' => $profile_photo_path,
             'count_my_orders' => $count_my_orders,
             'count_my_popular_orders' => $count_my_popular_orders,
+            'password' => $password,
 
 
             // 'password' => $password
@@ -203,22 +204,18 @@ class ProfileController extends Controller
             'my_popular_order' => $my_popular_order,
         ], 200);
     }
+
+
+
     public function Awaiting_confirmation($id)
     {
         $user = $this->getUser($id);
         $order = Order::where('user_id', $user->id)->where('publishable', 0)->get();
-
-
-
-
         if (!$order) {
             return response()->json([
                 'message' => "not found"
             ], 404);
         }
-
-
-
         return response()->json([
             'my_await_order' => $order,
         ], 200);

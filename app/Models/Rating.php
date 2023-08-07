@@ -11,7 +11,8 @@ class Rating extends Model
     protected $fillable=[
         'user_id',
         'order_id',
-        'stars_rated'
+        'stars_rated',
+       'order_user_id'
     ];
     public function user()
     {

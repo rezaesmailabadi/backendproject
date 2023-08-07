@@ -16,6 +16,10 @@ class RatingController extends Controller
         $stars_rated = $request->order_rating;
         $order_id = $request->order_id;
         $user_id = $request->user_id;
+
+        // $order_user_id = order::where('id', $order_id)->get('user_id');
+        
+        
         $order_check = Order::where('id', $order_id)->where('publishable', 1)->first();
 
 
@@ -36,7 +40,8 @@ class RatingController extends Controller
                 $rate =  Rating::create([
                     'user_id' => $user_id,
                     'order_id' => $order_id,
-                    'stars_rated' => $stars_rated
+                    'stars_rated' => $stars_rated,
+                    'order_user_id'=>$order_check->user_id,
                 ]);
 
                 return response()->json([
@@ -51,17 +56,26 @@ class RatingController extends Controller
         }
     }
 
-    public function showrating($order_id){
+    public function showrating($user_id){
        
-        $rating=Rating::where('order_id',$order_id)->get();
-        //تعداد نفراتی که ثبت امتیاز کردند
+        $rating=Rating::where('order_user_id',$user_id)->get();
+        
         $count_rating=$rating->count();
-        $rating_sum=Rating::where('order_id',$order_id)->sum('stars_rated');
+        if($count_rating){
+        $rating_sum=Rating::where('order_user_id',$user_id)->sum('stars_rated');
         $rating_value=$rating_sum/$count_rating;
      
         return response()->json([
             'results' => $rating_value
         ], 200);
+    }
+    else{
+        $rating_value=0;
+        return response()->json([
+            'results' => $rating_value
+        ], 200);
+
+    }
 
     }
 }

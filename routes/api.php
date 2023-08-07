@@ -39,18 +39,18 @@ Route::get('/home', [HomeController::class, 'latestorder']);
 
 
 //order
-Route::get('/relatedproducts', [OrderController::class, 'Relatedproducts']);
+Route::get('relatedproducts/{id}', [OrderController::class, 'Relatedproducts']);
 Route::get('orders', [OrderController::class, 'index']);
 Route::get('orders/{id}', [OrderController::class, 'show']);
 // Route::post('addorder', [OrderController::class, 'store']);
 Route::any('addorder', [OrderController::class, 'store']);
-Route::put('updateorder/{id}', [OrderController::class, 'update']);
-Route::delete('deleteorder/{id}', [OrderController::class, 'destroy']);
 Route::get('newsorder', [OrderController::class, 'newsorder']); //new
 Route::get('ordercategory/{id}', [CategoryController::class, 'ordercategory']);
 Route::get('order-datails/{id}', [OrderController::class, 'datail']);
 Route::put('updateorder/{id}', [OrderController::class, 'update']);
 Route::delete('deleteorder/{id}', [OrderController::class, 'destroy']);
+Route::get('faveriteorder', [OrderController::class, 'faveriteorder']);
+
 
 
 
@@ -108,24 +108,18 @@ Route::get('payment', [PaymentController::class, 'paymentSubmit']);
 
 
 
-
 //آگهی در انتظار تایید
 Route::get('Awaiting_confirmation/{id}', [ProfileController::class, 'Awaiting_confirmation']);
 
 
 //search
-Route::get('search/{request?}', [SearchController::class, 'search']);
+Route::get('search', [SearchController::class, 'search']);
 
 
 //filter min_price max_price
-Route::get('filterprice/{price?}', [SearchController::class, 'price']);
+Route::get('filterprice', [SearchController::class, 'price']);
 
 
-
-Route::post('suggest', [SuggestController::class, 'suggest']);
-
-
-Route::get('my_order_suggest/{order_id}', [SuggestController::class, 'my_order_suggest']);
 
 //ارسال ایمیل و نوتیفکیشن برای کاربر 
 Route::post('sendemail/{id}', [SuggestController::class, 'sendemail']);
@@ -139,3 +133,6 @@ Route::post('add', [RatingController::class, 'add']);
 
 // محاسبه ی امتیاز کلی برای هر ادر
 Route::get('showrating/{order_id}', [RatingController::class, 'showrating']);
+Route::post('suggest', [SuggestController::class, 'suggest']);
+
+Route::get('my_order_suggest/{user_id}', [SuggestController::class, 'my_order_suggest']);

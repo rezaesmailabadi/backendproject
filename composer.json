@@ -15,7 +15,8 @@
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
-        "saeedpooyanfar/zarinpal": "^5.0"
+        "saeedpooyanfar/zarinpal": "^5.0",
+        "shetabit/payment": "^5.4"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
