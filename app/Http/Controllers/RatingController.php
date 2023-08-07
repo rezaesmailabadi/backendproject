@@ -17,10 +17,11 @@ class RatingController extends Controller
         $order_id = $request->order_id;
         $user_id = $request->user_id;
 
-        // $order_user_id = order::where('id', $order_id)->get('user_id');
+        // $order_user_id = order::where('id', $order_id)->get();
         
         
         $order_check = Order::where('id', $order_id)->where('publishable', 1)->first();
+      
 
 
 

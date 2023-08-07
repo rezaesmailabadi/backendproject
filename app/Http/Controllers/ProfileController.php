@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Services\Image\ImageService;
 use App\Models\Like;
 use App\Models\Order;
+use App\Models\Resume;
 use App\Models\User;
 use Facade\FlareClient\Stacktrace\File as StacktraceFile;
 use Illuminate\Http\Request;
@@ -219,5 +220,45 @@ class ProfileController extends Controller
         return response()->json([
             'my_await_order' => $order,
         ], 200);
+    }
+
+
+
+    public function resume(request $request,$id)
+    {
+      
+        // $user = $this->getUser($id);
+   
+        $request->validate([
+            'username'=>'required',
+        ]);
+        $profile_photo_path=$request->file('profile_photo_path')->store('profile_photo','public');
+        $work_samples=$request->file('work_samples')->store('work_samples','public');
+        $resume=Resume::create([
+        'username'=>$request->username,
+        'country'=>$request->country,
+        'city'=>$request->city,
+        'proficiency'=>$request->proficiency,
+        'work_samples'=>$work_samples,
+        'educational_records'=>$request->educational_records,
+        'achievement'=>$request->achievement,
+        'profile_photo_path'=>$profile_photo_path,
+        'other_information'=>$request->other_information,
+        'work_resume'=>$request->work_resume,
+        'title'=>$request->title,
+        'role'=>$request->role,
+        'Holidays'=>$request->Holidays,
+        'user_id'=>$id
+        // 'user_id'=>$user->id
+        ]);
+        
+
+
+        return response()->json([
+         'message'=>'resume uolode',
+         'statuse'=>'success',
+         'resume'=>$resume
+
+        ], 200); 
     }
 }

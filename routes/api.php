@@ -102,7 +102,8 @@ Route::post('change-password/{id}', [ProfileController::class, 'change_password'
 Route::post('update-profile/{id}', [ProfileController::class, 'update_profile']);
 Route::get('my_order/{id}', [ProfileController::class, 'my_order']);
 Route::get('my_popular_order/{id}', [ProfileController::class, 'my_popular_order']);
-
+///رزومه
+Route::post('resume/{id}', [ProfileController::class, 'resume']);
 
 Route::get('payment', [PaymentController::class, 'paymentSubmit']);
 
