@@ -38,13 +38,14 @@ class OrderController extends Controller
 
         //پکیج جهت ثبت بازدید هر سفارش
         ///https://github.com/coderflexx/laravisit
-        $orders->visit()->withIp();
+    //    $visit_order= $orders->visit()->withIp();
 
 
 
 
         return response()->json([
             'tickets' => $orders
+            
         ], 200);
     }
 

@@ -11,6 +11,7 @@ use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\popularController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RatingController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SuggestController;
 use Illuminate\Http\Request;
@@ -132,3 +133,9 @@ Route::post('sendemail/{id}', [SuggestController::class, 'sendemail']);
 
 //نوتیفکیشن های خوانده نشده
 Route::get('markasread/{id}', [SuggestController::class, 'markasread']);
+
+//ثبت امتیاز برای هر اردر
+Route::post('add', [RatingController::class, 'add']);
+
+// محاسبه ی امتیاز کلی برای هر ادر
+Route::get('showrating/{order_id}', [RatingController::class, 'showrating']);

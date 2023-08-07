@@ -10,9 +10,10 @@ class FavoriteController extends Controller
 {
     public function index(Order $order){
         
-        
+       
         /// براساس بیشترین بازدید
         $orderfavorites=Order::popularAllTime()->get();
+
         if (!$orderfavorites) {
             return response()->json([
                 'message' => "not found"
