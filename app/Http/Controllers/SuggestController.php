@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Resume;
 use App\Models\Suggest;
 use App\Models\User;
 use App\Notifications\SendEmailNotification;
@@ -61,10 +62,20 @@ class SuggestController extends Controller
 
     public function my_order_suggest($order_id)
     {
-        $suggests = suggest::where('order_id', $order_id)->get();
+        $suggests = suggest::where('order_id', $order_id)->first();
+
+
+
+        if($suggests){
+            $user_id=$suggests->user_id;
+           $resume=Resume::where('user_id',$user_id)->first();
+        
+
+        }
         return response()->json([
             'message' => "successfully",
-            'suggests' => $suggests
+            'suggests' => $suggests,
+            'resume'=>$resume
         ], 200);
     }
 
