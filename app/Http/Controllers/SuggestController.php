@@ -61,24 +61,50 @@ class SuggestController extends Controller
 
 
     public function my_order_suggest($order_id)
+
+
     {
-        $suggests = suggest::where('order_id', $order_id)->first();
+        $suggests = suggest::where('order_id', $order_id)->get();
 
+      
 
+        $results = [];
 
-        if($suggests){
-            $user_id=$suggests->user_id;
-           $resume=Resume::where('user_id',$user_id)->first();
-           $user=user::where('id',$user_id)->first();
+        foreach (suggest::all() as $suggest)
+        {
+            $user_id=$suggest->user_id;
+            $results[] = [
+             
+                'suggest'=>$suggest,
+               
+              'resume'=>Resume::where('user_id',$user_id)->get(),
+              'user'=>user::where('id',$user_id)->get()
+            ];
+        }
+        
+        
+           return response()->json([
+            'message' => "successfully",
+            'result' => $results,
+           
+        ], 200);
+        
         
 
-        }
-        return response()->json([
-            'message' => "successfully",
-            'suggests' => $suggests,
-            'resume'=>$resume,
-            'user'=>$user
-        ], 200);
+
+
+    
+              
+
+
+
+    
+    
+           
+        
+        
+        
+       
     }
 
 
