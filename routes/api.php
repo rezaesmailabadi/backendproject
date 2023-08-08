@@ -104,6 +104,7 @@ Route::get('my_order/{id}', [ProfileController::class, 'my_order']);
 Route::get('my_popular_order/{id}', [ProfileController::class, 'my_popular_order']);
 ///رزومه
 Route::post('resume/{id}', [ProfileController::class, 'resume']);
+Route::get('my_resume/{id}', [ProfileController::class, 'my_resume']);
 
 Route::get('payment', [PaymentController::class, 'paymentSubmit']);
 

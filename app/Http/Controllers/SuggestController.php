@@ -69,13 +69,15 @@ class SuggestController extends Controller
         if($suggests){
             $user_id=$suggests->user_id;
            $resume=Resume::where('user_id',$user_id)->first();
+           $user=user::where('id',$user_id)->first();
         
 
         }
         return response()->json([
             'message' => "successfully",
             'suggests' => $suggests,
-            'resume'=>$resume
+            'resume'=>$resume,
+            'user'=>$user
         ], 200);
     }
 

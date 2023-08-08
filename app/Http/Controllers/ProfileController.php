@@ -261,4 +261,29 @@ class ProfileController extends Controller
 
         ], 200); 
     }
+
+
+    public function my_resume($id)
+    {
+       $user=user::where('id',$id)->first();
+        // $user = $this->getUser($id);
+
+        $first_name = $user->first_name;
+        $last_name = $user->last_name;
+        $profile_photo_path = $user->profile_photo_path;
+
+
+        $resume=Resume::where('user_id',$id)->first();
+        return response()->json([
+            'message'=>' show resume  ',
+            'statuse'=>'success',
+            'resume'=>$resume,
+            'first_name' => $first_name,
+            'last_name' => $last_name,
+            'profile_photo_path' => $profile_photo_path,
+   
+           ], 200); 
+       
+    }
+
 }
